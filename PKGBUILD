@@ -49,13 +49,15 @@ source=("https://github.com/Icinga/$pkgname/archive/v$pkgver.tar.gz"
         'https://github.com/Icinga/icinga2/commit/7e62a68eadada58e762d3f4261750796adffd440.diff'
         'https://github.com/Icinga/icinga2/commit/45dd71e0f9a93369e08d6cb26f97940f9c9594aa.diff'
         "$pkgname.tmpfiles"
-        "$pkgname.sysusers")
+        "$pkgname.sysusers"
+        "openrc_$pkgname")
 sha256sums=('56387d5e047df04fd91fdb8db3124eb09325c7377fbcaa11ef063147db816dfb'
             'dc1a2530d1c2c311826443cebaaa3c307f400e6a995414c654f4e6b94ec8b885'
             '52e50af7b10d75fcd6257fbf9b3c9043efb3cc497fac0970656fbffb1d328ee5'
             '1fa4c67f2f1bbed9814441d370ed50484bf64e57d16fddbbf5a0be8da9c7f1a2'
             '1302b333f49ead14f8808a379535971501d3a0c1ba02a7bf7b4406b7d27c754c'
-            '2f946a33ea50a3c4400a81acd778e6411ffe5e2257a98004288b84a64f382810')
+            '2f946a33ea50a3c4400a81acd778e6411ffe5e2257a98004288b84a64f382810'
+            '33250075ae529b6c84daa2b4d772b3bb311c5aa85ad984d280a1ac2426f7a924')
 
 prepare() {
   cd "$srcdir/$pkgname-$pkgver"
