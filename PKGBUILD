@@ -2,9 +2,9 @@
 # Contributor: Malte Rabenseifner <mail@malte-rabenseifner.de>
 # Contributor: bebehei <bebe@bebehei.de>
 
-pkgname='icinga2'
-pkgver=2.11.0
-pkgrel=1
+pkgname=icinga2
+pkgver=2.12.3
+pkgrel=2
 pkgdesc="An open source host, service and network monitoring program"
 license=('GPL')
 arch=('i686' 'x86_64')
@@ -16,6 +16,7 @@ optdepends=('monitoring-plugins: plugins needed for icinga checks'
 makedepends=('boost' 'cmake' 'libmariadbclient' 'postgresql-libs' 'systemd')
 replaces=('icinga2-common')
 backup=(etc/default/icinga2
+        etc/init.d/icinga2
         etc/icinga2/features-available/api.conf
         etc/icinga2/features-available/checker.conf
         etc/icinga2/features-available/command.conf
@@ -24,6 +25,7 @@ backup=(etc/default/icinga2
         etc/icinga2/features-available/elasticsearch.conf
         etc/icinga2/features-available/gelf.conf
         etc/icinga2/features-available/graphite.conf
+        etc/icinga2/features-available/icingadb.conf
         etc/icinga2/features-available/ido-mysql.conf
         etc/icinga2/features-available/ido-pgsql.conf
         etc/icinga2/features-available/influxdb.conf
@@ -43,11 +45,25 @@ backup=(etc/default/icinga2
 install='icinga2.install'
 changelog="icinga2.changelog"
 source=("https://github.com/Icinga/$pkgname/archive/v$pkgver.tar.gz"
+        'https://patch-diff.githubusercontent.com/raw/Icinga/icinga2/pull/8184.patch'
+        'https://github.com/Icinga/icinga2/commit/7e62a68eadada58e762d3f4261750796adffd440.diff'
+        'https://github.com/Icinga/icinga2/commit/45dd71e0f9a93369e08d6cb26f97940f9c9594aa.diff'
         "$pkgname.tmpfiles"
         "$pkgname.sysusers")
-sha256sums=('f1702a598aed458cce44668526db8d655a68f270e408f10b859eaac175ccdb51'
+sha256sums=('56387d5e047df04fd91fdb8db3124eb09325c7377fbcaa11ef063147db816dfb'
+            'dc1a2530d1c2c311826443cebaaa3c307f400e6a995414c654f4e6b94ec8b885'
+            '52e50af7b10d75fcd6257fbf9b3c9043efb3cc497fac0970656fbffb1d328ee5'
+            '1fa4c67f2f1bbed9814441d370ed50484bf64e57d16fddbbf5a0be8da9c7f1a2'
             '1302b333f49ead14f8808a379535971501d3a0c1ba02a7bf7b4406b7d27c754c'
             '2f946a33ea50a3c4400a81acd778e6411ffe5e2257a98004288b84a64f382810')
+
+prepare() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  patch -p1 < "$srcdir/8184.patch"
+  patch -p1 < "$srcdir/7e62a68eadada58e762d3f4261750796adffd440.diff"
+  patch -p1 < "$srcdir/45dd71e0f9a93369e08d6cb26f97940f9c9594aa.diff"
+}
 
 build() {
   mkdir -p "$srcdir/$pkgname-$pkgver/build"
@@ -62,7 +78,8 @@ build() {
     -DCMAKE_INSTALL_LOCALSTATEDIR=/var \
     -DICINGA2_SYSCONFIGFILE=/etc/default/icinga2 \
     -DICINGA2_PLUGINDIR=/usr/lib/monitoring-plugins \
-    -DUSE_SYSTEMD=ON \
+    -DINSTALL_SYSTEMD_SERVICE_AND_INITSCRIPT=ON \
+    -DUSE_SYSTEMD=OFF \
     -DLOGROTATE_HAS_SU=OFF
 
   make
@@ -88,6 +105,10 @@ package() {
   install -Dm644 "$srcdir/$pkgname.tmpfiles" "$pkgdir/usr/lib/tmpfiles.d/$pkgname.conf"
   install -Dm644 "$srcdir/$pkgname.sysusers" "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
 
+  # install openrc start-stop script
+
+  install -Dm755 "$srcdir/openrc_$pkgname" "/etc/init.d/$pkgname"
+
   # install syntax highlighting for vim and nano
   cd "$srcdir/$pkgname-$pkgver"
   install -Dm644 tools/syntax/vim/ftdetect/icinga2.vim "$pkgdir/usr/share/vim/vimfiles/ftdetect/icinga2.vim"
@@ -100,6 +121,7 @@ package() {
   rm "$pkgdir/etc/icinga2/features-enabled/checker.conf"
   rm "$pkgdir/etc/icinga2/features-enabled/mainlog.conf"
   rm "$pkgdir/etc/icinga2/features-enabled/notification.conf"
+
   # ensure that nothing it left in features enables. make sure to keep the list
   # above in sync with post_install. rmdir && mkdir seems to be the easiest way
   # to check if the directory was actually empty.
