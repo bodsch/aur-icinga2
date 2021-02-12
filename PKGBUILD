@@ -109,7 +109,7 @@ package() {
 
   # install openrc start-stop script
 
-  install -Dm755 "$srcdir/openrc_$pkgname" "/etc/init.d/$pkgname"
+  install -Dm755 "$srcdir/../openrc_$pkgname" "/etc/init.d/$pkgname"
 
   # install syntax highlighting for vim and nano
   cd "$srcdir/$pkgname-$pkgver"
