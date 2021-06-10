@@ -9,13 +9,13 @@ pkgdesc="An open source host, service and network monitoring program"
 license=('GPL')
 arch=('i686' 'x86_64')
 url="http://www.icinga.org"
-depends=('boost-libs' 'libedit' 'libsystemd' 'openssl' 'yajl' 'bison' 'flex')
+depends=('boost-libs' 'libedit' 'openssl' 'yajl' 'bison' 'flex')
 optdepends=('monitoring-plugins: plugins needed for icinga checks'
             'libmariadbclient: for MySQL support'
             'postgresql-libs: for PostgreSQL support')
 makedepends=('boost' 'cmake' 'libmariadbclient' 'postgresql-libs')
 replaces=('icinga2-common')
-backup=(etc/default/icinga2
+backup=(etc/conf.d/icinga2
         etc/init.d/icinga2
         etc/icinga2/features-available/api.conf
         etc/icinga2/features-available/checker.conf
@@ -78,7 +78,7 @@ build() {
     -DCMAKE_INSTALL_SBINDIR=/usr/bin \
     -DCMAKE_INSTALL_LIBDIR=/usr/lib \
     -DCMAKE_INSTALL_LOCALSTATEDIR=/var \
-    -DICINGA2_SYSCONFIGFILE=/etc/default/icinga2 \
+    -DICINGA2_SYSCONFIGFILE=/etc/conf.d/icinga2 \
     -DICINGA2_PLUGINDIR=/usr/lib/monitoring-plugins \
     -DINSTALL_SYSTEMD_SERVICE_AND_INITSCRIPT=ON \
     -DUSE_SYSTEMD=OFF \
@@ -108,7 +108,6 @@ package() {
   install -Dm644 "$srcdir/$pkgname.sysusers" "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
 
   # install openrc start-stop script
-
   install -Dm755 "$srcdir/../openrc_$pkgname" "/etc/init.d/$pkgname"
 
   # install syntax highlighting for vim and nano
