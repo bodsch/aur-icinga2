@@ -80,7 +80,7 @@ build() {
     -DCMAKE_INSTALL_LOCALSTATEDIR=/var \
     -DICINGA2_SYSCONFIGFILE=/etc/conf.d/icinga2 \
     -DICINGA2_PLUGINDIR=/usr/lib/monitoring-plugins \
-    -DINSTALL_SYSTEMD_SERVICE_AND_INITSCRIPT=ON \
+    -DINSTALL_SYSTEMD_SERVICE_AND_INITSCRIPT=OFF \
     -DUSE_SYSTEMD=OFF \
     -DLOGROTATE_HAS_SU=OFF
 
@@ -108,7 +108,7 @@ package() {
   install -Dm644 "$srcdir/$pkgname.sysusers" "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
 
   # install openrc start-stop script
-  install -Dm755 "$srcdir/../openrc_$pkgname" "/etc/init.d/$pkgname"
+  sudo install -Dm755 "$srcdir/../openrc_$pkgname" "/etc/init.d/$pkgname"
 
   # install syntax highlighting for vim and nano
   cd "$srcdir/$pkgname-$pkgver"
