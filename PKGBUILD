@@ -3,7 +3,7 @@
 # Contributor: bebehei <bebe@bebehei.de>
 
 pkgname=icinga2
-pkgver=2.12.3
+pkgver=2.12.5
 pkgrel=2
 pkgdesc="An open source host, service and network monitoring program"
 license=('GPL')
@@ -44,28 +44,16 @@ backup=(etc/conf.d/icinga2
         etc/logrotate.d/icinga2)
 install='icinga2.install'
 changelog="icinga2.changelog"
+
 source=("https://github.com/Icinga/$pkgname/archive/v$pkgver.tar.gz"
-        'https://patch-diff.githubusercontent.com/raw/Icinga/icinga2/pull/8184.patch'
-        'https://github.com/Icinga/icinga2/commit/7e62a68eadada58e762d3f4261750796adffd440.diff'
-        'https://github.com/Icinga/icinga2/commit/45dd71e0f9a93369e08d6cb26f97940f9c9594aa.diff'
         "$pkgname.tmpfiles"
         "$pkgname.sysusers"
         "openrc_$pkgname")
-sha256sums=('56387d5e047df04fd91fdb8db3124eb09325c7377fbcaa11ef063147db816dfb'
-            'dc1a2530d1c2c311826443cebaaa3c307f400e6a995414c654f4e6b94ec8b885'
-            '52e50af7b10d75fcd6257fbf9b3c9043efb3cc497fac0970656fbffb1d328ee5'
-            '1fa4c67f2f1bbed9814441d370ed50484bf64e57d16fddbbf5a0be8da9c7f1a2'
+
+sha256sums=('f5bdc6057eb5a4fde4c1f359f9b7dde6e8bc8c795601b18532010609c660221b'
             '1302b333f49ead14f8808a379535971501d3a0c1ba02a7bf7b4406b7d27c754c'
             '2f946a33ea50a3c4400a81acd778e6411ffe5e2257a98004288b84a64f382810'
             '33250075ae529b6c84daa2b4d772b3bb311c5aa85ad984d280a1ac2426f7a924')
-
-prepare() {
-  cd "$srcdir/$pkgname-$pkgver"
-
-  patch -p1 < "$srcdir/8184.patch"
-  patch -p1 < "$srcdir/7e62a68eadada58e762d3f4261750796adffd440.diff"
-  patch -p1 < "$srcdir/45dd71e0f9a93369e08d6cb26f97940f9c9594aa.diff"
-}
 
 build() {
   mkdir -p "$srcdir/$pkgname-$pkgver/build"
