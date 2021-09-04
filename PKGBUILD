@@ -69,6 +69,7 @@ build() {
     -DICINGA2_SYSCONFIGFILE=/etc/conf.d/icinga2 \
     -DICINGA2_PLUGINDIR=/usr/lib/monitoring-plugins \
     -DINSTALL_SYSTEMD_SERVICE_AND_INITSCRIPT=OFF \
+    -DICINGA2_VERSION=$pkgver-$pkgrel \
     -DUSE_SYSTEMD=OFF \
     -DLOGROTATE_HAS_SU=OFF
 
