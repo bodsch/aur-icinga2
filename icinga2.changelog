@@ -1,8 +1,8 @@
-2.12.5-2
-  - New upstream version 2.12.5 (artixlinux)
+2.12.6-1
+  - New upstream version 2.12.6
 
 2.12.3-2
-  - Port for artixlinux (systemd-less)
+  - Port for ArtixLinux (systemd-less)
 
 2.12.3-1
   - New upstream version 2.12.3

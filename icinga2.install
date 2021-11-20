@@ -1,5 +1,5 @@
 post_install() {
-  /usr/bin/systemd-sysusers icinga2.conf
+  /usr/bin/sysusers icinga2.conf
 
   /usr/bin/chown -R icinga:icinga \
     /etc/icinga2 \
