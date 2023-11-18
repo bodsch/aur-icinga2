@@ -2,9 +2,15 @@
 # Contributor: Malte Rabenseifner <mail@malte-rabenseifner.de>
 # Contributor: bebehei <bebe@bebehei.de>
 
+<<<<<<< Updated upstream
 pkgname='icinga2'
 pkgver=2.11.0
 pkgrel=1
+=======
+pkgname=icinga2
+pkgver=2.13.8
+pkgrel=2
+>>>>>>> Stashed changes
 pkgdesc="An open source host, service and network monitoring program"
 license=('GPL')
 arch=('i686' 'x86_64')
@@ -13,6 +19,7 @@ depends=('boost-libs' 'libedit' 'libsystemd' 'openssl' 'yajl')
 optdepends=('monitoring-plugins: plugins needed for icinga checks'
             'libmariadbclient: for MySQL support'
             'postgresql-libs: for PostgreSQL support')
+<<<<<<< Updated upstream
 makedepends=('boost' 'cmake' 'libmariadbclient' 'postgresql-libs' 'systemd')
 replaces=('icinga2-common')
 backup=(etc/default/icinga2
@@ -48,6 +55,70 @@ source=("https://github.com/Icinga/$pkgname/archive/v$pkgver.tar.gz"
 sha256sums=('f1702a598aed458cce44668526db8d655a68f270e408f10b859eaac175ccdb51'
             '1302b333f49ead14f8808a379535971501d3a0c1ba02a7bf7b4406b7d27c754c'
             '2f946a33ea50a3c4400a81acd778e6411ffe5e2257a98004288b84a64f382810')
+=======
+makedepends=('boost' 'cmake' 'libmariadbclient' 'postgresql-libs')
+
+replaces=('icinga2-common')
+
+backup=(
+    etc/conf.d/icinga2
+    etc/init.d/icinga2
+    etc/icinga2/features-available/api.conf
+    etc/icinga2/features-available/checker.conf
+    etc/icinga2/features-available/command.conf
+    etc/icinga2/features-available/compatlog.conf
+    etc/icinga2/features-available/debuglog.conf
+    etc/icinga2/features-available/elasticsearch.conf
+    etc/icinga2/features-available/gelf.conf
+    etc/icinga2/features-available/graphite.conf
+    etc/icinga2/features-available/icingadb.conf
+    etc/icinga2/features-available/ido-mysql.conf
+    etc/icinga2/features-available/ido-pgsql.conf
+    etc/icinga2/features-available/influxdb.conf
+    etc/icinga2/features-available/influxdb2.conf
+    etc/icinga2/features-available/livestatus.conf
+    etc/icinga2/features-available/mainlog.conf
+    etc/icinga2/features-available/notification.conf
+    etc/icinga2/features-available/opentsdb.conf
+    etc/icinga2/features-available/perfdata.conf
+    etc/icinga2/features-available/statusdata.conf
+    etc/icinga2/features-available/syslog.conf
+    etc/icinga2/constants.conf
+    etc/icinga2/icinga2.conf
+    etc/icinga2/scripts/mail-host-notification.sh
+    etc/icinga2/scripts/mail-service-notification.sh
+    etc/icinga2/zones.conf
+    etc/logrotate.d/icinga2
+)
+install='icinga2.install'
+changelog="icinga2.changelog"
+
+source=(
+    "${pkgname}-${pkgver}-${CARCH}.tar.gz::https://github.com/Icinga/$pkgname/archive/v$pkgver.tar.gz"
+    "$pkgname.tmpfiles"
+    "$pkgname.sysusers"
+    "openrc_$pkgname"
+)
+
+sha512sum=(
+    "c16ee7d4876a712da19aaf8c2e85093bd3a4e60bdb29471a33d1e5df3df43c0e9b3afab59f5bbf2b99d06f6c501d52a2759a4b7783f877f3a5c713f43fe683a5"
+    "51811add3f83df870f4b18ad97a6a9ccaf5be7ab4c0614b0d85cfccf5dc3e3debd7df42ecfe08c00a1b4d25e5b4326214f6a9c079fbf2886fc9e5a4c3b8ebbba"
+    "875843000bf40cedffadee9ec0691d88173610befd653da06ea3828e2b1c5c36ddcb308bdba053f72c9311f8f023be044abb9dc41a712381cdf62e0e8434dd2e"
+    "17fd0f63d9fe6f7e947d5f7485c2115dacdc9f2208931d162cb1b4882e33e027ce51d5c67241154c347d4d87f8c67d5f641cfa8d1f687de51d4225fab761cea1"
+)
+
+sha256sums=(
+    '0b1974eff321141ccc7b6b7bad52070a81d8679674570ebdd2525e6f8443a4e2'
+    '1302b333f49ead14f8808a379535971501d3a0c1ba02a7bf7b4406b7d27c754c'
+    '2f946a33ea50a3c4400a81acd778e6411ffe5e2257a98004288b84a64f382810'
+    '1495238a2248fe2690ce7b186c96b68a28868b76276d2d37e5ae2f1e25cd6dcd'
+)
+
+# sha256sums=('eb5e8c4e17622de085f2aa3a6ac409d40feed685ebaaf9435bbb70ea91dc46d2'
+#             '1302b333f49ead14f8808a379535971501d3a0c1ba02a7bf7b4406b7d27c754c'
+#             '2f946a33ea50a3c4400a81acd778e6411ffe5e2257a98004288b84a64f382810'
+#             '33250075ae529b6c84daa2b4d772b3bb311c5aa85ad984d280a1ac2426f7a924')
+>>>>>>> Stashed changes
 
 build() {
   mkdir -p "$srcdir/$pkgname-$pkgver/build"
