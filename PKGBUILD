@@ -10,7 +10,7 @@ pkgdesc="An open source host, service and network monitoring program"
 license=('GPL')
 arch=('i686' 'x86_64')
 url="http://www.icinga.org"
-depends=('boost-libs' 'libedit' 'libsystemd' 'openssl' 'yajl')
+depends=('boost-libs' 'libedit' 'openssl' 'yajl' 'bison' 'flex')
 optdepends=('monitoring-plugins: plugins needed for icinga checks'
             'libmariadbclient: for MySQL support'
             'postgresql-libs: for PostgreSQL support')
@@ -84,9 +84,11 @@ build() {
     -DCMAKE_INSTALL_SBINDIR=/usr/bin \
     -DCMAKE_INSTALL_LIBDIR=/usr/lib \
     -DCMAKE_INSTALL_LOCALSTATEDIR=/var \
-    -DICINGA2_SYSCONFIGFILE=/etc/default/icinga2 \
+    -DICINGA2_SYSCONFIGFILE=/etc/conf.d/icinga2 \
     -DICINGA2_PLUGINDIR=/usr/lib/monitoring-plugins \
-    -DUSE_SYSTEMD=ON \
+    -DINSTALL_SYSTEMD_SERVICE_AND_INITSCRIPT=OFF \
+    -DICINGA2_VERSION=$pkgver-$pkgrel \
+    -DUSE_SYSTEMD=OFF \
     -DLOGROTATE_HAS_SU=OFF
 
   make
@@ -112,6 +114,9 @@ package() {
   install -Dm644 "$srcdir/$pkgname.tmpfiles" "$pkgdir/usr/lib/tmpfiles.d/$pkgname.conf"
   install -Dm644 "$srcdir/$pkgname.sysusers" "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
 
+  # install openrc start-stop script
+  sudo install -Dm755 "$srcdir/../openrc_$pkgname" "/etc/init.d/$pkgname"
+
   # install syntax highlighting for vim and nano
   cd "$srcdir/$pkgname-$pkgver"
   install -Dm644 tools/syntax/vim/ftdetect/icinga2.vim "$pkgdir/usr/share/vim/vimfiles/ftdetect/icinga2.vim"
@@ -124,6 +129,7 @@ package() {
   rm "$pkgdir/etc/icinga2/features-enabled/checker.conf"
   rm "$pkgdir/etc/icinga2/features-enabled/mainlog.conf"
   rm "$pkgdir/etc/icinga2/features-enabled/notification.conf"
+
   # ensure that nothing it left in features enables. make sure to keep the list
   # above in sync with post_install. rmdir && mkdir seems to be the easiest way
   # to check if the directory was actually empty.
