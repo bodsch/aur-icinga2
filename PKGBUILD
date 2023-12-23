@@ -3,7 +3,7 @@
 # Contributor: bebehei <bebe@bebehei.de>
 
 pkgname=icinga2
-pkgver=2.13.9
+pkgver=2.14.1
 pkgrel=2
 
 pkgdesc="An open source host, service and network monitoring program"
@@ -40,7 +40,6 @@ backup=(
     etc/icinga2/features-available/notification.conf
     etc/icinga2/features-available/opentsdb.conf
     etc/icinga2/features-available/perfdata.conf
-    etc/icinga2/features-available/statusdata.conf
     etc/icinga2/features-available/syslog.conf
     etc/icinga2/constants.conf
     etc/icinga2/icinga2.conf
@@ -69,7 +68,7 @@ sha512sum=(
 )
 
 sha256sums=(
-    '852c7af74e321e58f8df52e834ca781b7b9eb2dc6833182d8b86aa7c5ec81afe'
+    '205520b8e3ad50bc6f97a5a5659537df3bbf57f8d513bffaf0dde741e1fe31cd'
     '1302b333f49ead14f8808a379535971501d3a0c1ba02a7bf7b4406b7d27c754c'
     '2f946a33ea50a3c4400a81acd778e6411ffe5e2257a98004288b84a64f382810'
     '77c52109de6c05e87d8d285b7f16a09855296d67dbdcfc0bf33a42ee000eb3e3'
