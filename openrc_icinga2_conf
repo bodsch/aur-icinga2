@@ -1,0 +1,17 @@
+#This is the default environment Icinga 2 runs with.
+#Make your changes here.
+
+DAEMON=/usr/bin/icinga2
+
+ICINGA2_CACHE_DIR=/var/cache/icinga2
+ICINGA2_COMMAND_GROUP=icingacmd
+ICINGA2_CONFIG_FILE=/etc/icinga2/icinga2.conf
+ICINGA2_ERROR_LOG=/var/log/icinga2/error.log
+ICINGA2_GROUP=icinga
+ICINGA2_INIT_RUN_DIR=/run/icinga2
+ICINGA2_LOG=/var/log/icinga2/icinga2.log
+ICINGA2_LOG_DIR=/var/log/icinga2
+ICINGA2_PID_FILE=/run/icinga2/icinga2.pid
+ICINGA2_STARTUP_LOG=/var/log/icinga2/startup.log
+ICINGA2_USER="icinga"
+ICINGA2_USER=icinga

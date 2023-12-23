@@ -3,7 +3,7 @@
 # Contributor: bebehei <bebe@bebehei.de>
 
 pkgname=icinga2
-pkgver=2.13.8
+pkgver=2.13.9
 pkgrel=2
 
 pkgdesc="An open source host, service and network monitoring program"
@@ -57,20 +57,23 @@ source=(
     "$pkgname.tmpfiles"
     "$pkgname.sysusers"
     "openrc_$pkgname"
+    "openrc_${pkgname}_conf"
 )
 
 sha512sum=(
-    "c16ee7d4876a712da19aaf8c2e85093bd3a4e60bdb29471a33d1e5df3df43c0e9b3afab59f5bbf2b99d06f6c501d52a2759a4b7783f877f3a5c713f43fe683a5"
+    "dbdf1fb06b2cf3d7566194ed9f5883f05848cbc3f740a704f76868e985f2ac943389d56943f55bdba2900966c39472c6031bf032d815881fc64890c04de911dd"
     "51811add3f83df870f4b18ad97a6a9ccaf5be7ab4c0614b0d85cfccf5dc3e3debd7df42ecfe08c00a1b4d25e5b4326214f6a9c079fbf2886fc9e5a4c3b8ebbba"
     "875843000bf40cedffadee9ec0691d88173610befd653da06ea3828e2b1c5c36ddcb308bdba053f72c9311f8f023be044abb9dc41a712381cdf62e0e8434dd2e"
-    "17fd0f63d9fe6f7e947d5f7485c2115dacdc9f2208931d162cb1b4882e33e027ce51d5c67241154c347d4d87f8c67d5f641cfa8d1f687de51d4225fab761cea1"
+    "44c870fc44aebad5c4a106c301836f0b3c46c6fca8bd50d6833527cf33c4550b9781d7251821db8789aa41fb5f6eb26d2e3d5a18a38f940a93eee0c54c02ad59"
+    "f5cdec7d4fd00eeb56a14bd1ba3c8e1b3d137bc91d97633163c44c026fb9da6e8e5f1de468b64be598f3da9c85f15460e4941093905bc91864aceab60fb470f1"
 )
 
 sha256sums=(
-    '0b1974eff321141ccc7b6b7bad52070a81d8679674570ebdd2525e6f8443a4e2'
+    '852c7af74e321e58f8df52e834ca781b7b9eb2dc6833182d8b86aa7c5ec81afe'
     '1302b333f49ead14f8808a379535971501d3a0c1ba02a7bf7b4406b7d27c754c'
     '2f946a33ea50a3c4400a81acd778e6411ffe5e2257a98004288b84a64f382810'
-    '1495238a2248fe2690ce7b186c96b68a28868b76276d2d37e5ae2f1e25cd6dcd'
+    '77c52109de6c05e87d8d285b7f16a09855296d67dbdcfc0bf33a42ee000eb3e3'
+    '88e057f14b07bdf6d4284ba6194ea1527188af6462526720a5fa14327287b667'
 )
 
 build() {
@@ -116,6 +119,8 @@ package() {
 
   # install openrc start-stop script
   sudo install -Dm755 "$srcdir/../openrc_$pkgname" "/etc/init.d/$pkgname"
+  # install openrc config file
+  sudo install -Dm755 "$srcdir/../openrc_${pkgname}_conf" "/etc/conf.d/$pkgname"
 
   # install syntax highlighting for vim and nano
   cd "$srcdir/$pkgname-$pkgver"

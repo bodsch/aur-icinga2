@@ -1,6 +1,10 @@
 2.12.6-1
   - New upstream version 2.12.6
 
+2.13.9-1
+  - New upstream version 2.13.9
+  - Update openrc init script
+
 2.12.3-2
   - Port for ArtixLinux (systemd-less)
 
