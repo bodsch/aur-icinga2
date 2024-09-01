@@ -7,8 +7,17 @@ on:
       - main
       - debug
       - feature/**
+    paths:
+      - "!README.md"
+      - '.github/workflows/main.yml'
+    tags:
+      - "*"
   schedule:
     - cron: "20 23 * * 0"
+
+permissions:
+  # Allow creating GitHub release
+  contents: write
 
 jobs:
   pkgbuild:
