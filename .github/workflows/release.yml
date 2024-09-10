@@ -1,0 +1,48 @@
+---
+
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+    paths:
+      - "!README.md"
+      - '.github/workflows/release.yml'
+
+permissions:
+  # Allow creating GitHub release
+  contents: write
+
+jobs:
+  release-pkg:
+    name: "release pkg"
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.release_tag }}
+
+      # - name: tests
+      #   run: |
+      #     echo ${{ github.ref }}
+      #     echo ${{ matrix.release_tag }}
+
+      - name: Makepkg Build and Check
+        id: makepkg
+        uses: bodsch/pkgbuild-action@v2.0.1
+        with:
+          makepkgArgs: "--skippgpcheck --noconfirm"
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            ${{ steps.makepkg.outputs.pkgfile0 }}
+          token: ${{ github.token }}
+          # tag_name: ${{ matrix.release_tag }}
