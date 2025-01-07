@@ -22,27 +22,30 @@ permissions:
 
 jobs:
   pkgbuild:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
 
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+          with:
+            ref: ${{ matrix.release_tag }}
 
-    - name: Makepkg Build and Check
-      id: makepkg
-      uses: bodsch/pkgbuild-action@v2.0.1
-      with:
-        makepkgArgs: "--skippgpcheck --noconfirm"
+      - name: Makepkg Build and Check
+        id: makepkg
+        uses: bodsch/pkgbuild-action@v2.0.1
+        with:
+          makepkgArgs: "--skippgpcheck --noconfirm"
 
-    - name: Print Package Files
-      run: |
-        echo "Successfully created the following package archive"
-        printf '%s\n' "${{ steps.makepkg.outputs.pkgfile0 }}"
+      - name: Print Package Files
+        run: |
+          echo "Successfully created the following package archive"
+          echo "Package: "
+          echo "    - ${{ steps.makepkg.outputs.pkgfile0 }}"
 
-    # Uncomment to upload the package as an artifact
-    - name: Upload Package Archive
-      id: upload_package
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ steps.makepkg.outputs.pkgfile0 }}
-        path: ${{ steps.makepkg.outputs.pkgfile0 }}
+      # Uncomment to upload the package as an artifact
+      - name: Upload Package Archive ${{ steps.makepkg.outputs.pkgfile0 }}
+        id: upload_package
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.makepkg.outputs.pkgfile0 }}
+          path: ${{ steps.makepkg.outputs.pkgfile0 }}
