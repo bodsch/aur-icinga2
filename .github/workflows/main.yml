@@ -27,8 +27,8 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
-          with:
-            ref: ${{ matrix.release_tag }}
+        with:
+          ref: ${{ matrix.release_tag }}
 
       - name: Makepkg Build and Check
         id: makepkg
