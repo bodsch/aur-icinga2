@@ -3,7 +3,7 @@
 # Contributor: bebehei <bebe@bebehei.de>
 
 pkgname=icinga2
-pkgver=2.14.5
+pkgver=2.15.0
 pkgrel=2
 
 pkgdesc="An open source host, service and network monitoring program"
@@ -59,7 +59,7 @@ source=(
     "openrc_${pkgname}_conf"
 )
 
-sha256sums=('9ab744de272ce17a871298116bd8029400a08563664f07ad1e52d2fa73d6929f'
+sha256sums=('ebe2b13a156179a415831fe06445577222029a1d0369c8bb6fba1de30317b4a1'
             '1302b333f49ead14f8808a379535971501d3a0c1ba02a7bf7b4406b7d27c754c'
             '2f946a33ea50a3c4400a81acd778e6411ffe5e2257a98004288b84a64f382810'
             '77c52109de6c05e87d8d285b7f16a09855296d67dbdcfc0bf33a42ee000eb3e3'
